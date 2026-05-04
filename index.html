@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solicitud de Paz y Salvo — Gestión Humana</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --white: #ffffff;
+      --green: #1a8a4a;
+      --green-light: #22a85a;
+      --green-dark: #136638;
+      --blue: #0b4ea8;
+      --blue-light: #1a6cd4;
+      --blue-pale: #e8f0fb;
+      --blue-pale2: #d0e4fa;
+      --gray: #f5f7fa;
+      --gray2: #e9ecf0;
+      --text: #1a2333;
+      --text-soft: #5a6478;
+      --radius: 14px;
+      --shadow: 0 8px 40px rgba(11,78,168,0.13);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: linear-gradient(135deg, #0b4ea8 0%, #1a8a4a 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 40px 16px 60px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 10%, rgba(26,138,74,0.22) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 80% 80%, rgba(11,78,168,0.28) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: -80px; right: -80px;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.08);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      background: var(--white);
+      border-radius: 24px;
+      box-shadow: var(--shadow), 0 2px 8px rgba(26,138,74,0.08);
+      width: 100%;
+      max-width: 580px;
+      overflow: hidden;
+      animation: cardIn 0.55s cubic-bezier(0.22,1,0.36,1) both;
+    }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(32px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .header {
+      background: linear-gradient(120deg, var(--blue) 0%, var(--blue-light) 55%, var(--green) 100%);
+      padding: 36px 36px 28px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: -40px; right: -40px;
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .logo-icon {
+      width: 44px; height: 44px;
+      background: rgba(255,255,255,0.18);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+
+    .logo-text { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 18px; letter-spacing: 0.5px; }
+    .logo-sub  { font-size: 11px; opacity: 0.75; font-weight: 400; letter-spacing: 1px; text-transform: uppercase; }
+
+    .header h1 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 26px; line-height: 1.2; margin-bottom: 8px; }
+    .header p  { font-size: 14px; opacity: 0.85; line-height: 1.5; }
+
+    .status-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 600;
+      margin-top: 14px; backdrop-filter: blur(4px);
+    }
+    .status-pill::before {
+      content: ''; width: 7px; height: 7px; border-radius: 50%;
+      background: #7eeea0; animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+    .progress-bar { height: 4px; background: var(--gray2); position: relative; overflow: hidden; }
+    .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--blue), var(--green)); transition: width 0.4s ease; }
+
+    .body { padding: 32px 36px 36px; }
+
+    .section-label {
+      font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 11px;
+      letter-spacing: 1.5px; text-transform: uppercase; color: var(--blue);
+      margin-bottom: 18px; display: flex; align-items: center; gap: 8px;
+    }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--gray2); }
+
+    .field { margin-bottom: 20px; animation: fieldIn 0.4s ease both; }
+    @keyframes fieldIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
+    .field:nth-child(1) { animation-delay: 0.05s; }
+    .field:nth-child(2) { animation-delay: 0.10s; }
+    .field:nth-child(3) { animation-delay: 0.15s; }
+    .field:nth-child(4) { animation-delay: 0.20s; }
+    .field:nth-child(5) { animation-delay: 0.25s; }
+    .field:nth-child(6) { animation-delay: 0.30s; }
+
+    label { display: block; font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 6px; }
+    label .req { color: var(--green); margin-left: 2px; }
+    label .opt { font-size: 11px; color: var(--text-soft); font-weight: 400; margin-left: 4px; }
+
+    input, select {
+      width: 100%; height: 46px; border: 1.5px solid var(--gray2); border-radius: 10px;
+      padding: 0 14px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text);
+      background: var(--white); transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+      outline: none; appearance: none; -webkit-appearance: none;
+    }
+    input::placeholder { color: #b0b8c9; }
+    input:focus, select:focus { border-color: var(--blue-light); box-shadow: 0 0 0 3px var(--blue-pale); background: #fdfeff; }
+    input.valid { border-color: var(--green); }
+    input.error, select.error { border-color: #e0452e; box-shadow: 0 0 0 3px #fde8e4; }
+
+    .error-msg { font-size: 12px; color: #e0452e; margin-top: 4px; display: none; }
+    .field.has-error .error-msg { display: block; }
+
+    .select-wrap { position: relative; }
+    .select-wrap::after {
+      content: '▾'; position: absolute; right: 14px; top: 50%;
+      transform: translateY(-50%); color: var(--text-soft); pointer-events: none; font-size: 16px;
+    }
+
+    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 480px) {
+      .row-2 { grid-template-columns: 1fr; }
+      .body { padding: 24px 20px 28px; }
+      .header { padding: 28px 20px 22px; }
+    }
+
+    /* ── Campo Otro — con hint visual de opcional ── */
+    .otro-hint {
+      font-size: 12px;
+      color: var(--text-soft);
+      margin-top: 5px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .otro-hint::before {
+      content: 'ℹ';
+      font-size: 12px;
+      color: var(--blue-light);
+    }
+
+    .submit-btn {
+      width: 100%; height: 52px; border: none; border-radius: 12px;
+      background: linear-gradient(120deg, var(--blue) 0%, var(--green) 100%);
+      color: #fff; font-family: 'Montserrat', sans-serif; font-weight: 700;
+      font-size: 15px; letter-spacing: 0.5px; cursor: pointer;
+      margin-top: 28px; position: relative; overflow: hidden;
+      transition: transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(11,78,168,0.28);
+    }
+    .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
+    .submit-btn:disabled:hover { transform: none; box-shadow: none; }
+    .submit-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 28px rgba(11,78,168,0.35); }
+    .submit-btn:active { transform: translateY(1px); }
+    .submit-btn::after { content: ''; position: absolute; inset: 0; background: rgba(255,255,255,0); transition: background 0.2s; }
+    .submit-btn:hover::after { background: rgba(255,255,255,0.07); }
+    .submit-btn .btn-text { position: relative; z-index: 1; }
+    .submit-btn.loading .btn-text::after {
+      content: ''; display: inline-block; width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,0.4); border-top-color: #fff;
+      border-radius: 50%; animation: spin 0.7s linear infinite;
+      margin-left: 10px; vertical-align: middle;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .success-screen { display: none; padding: 48px 36px; text-align: center; animation: cardIn 0.5s ease both; }
+    .success-icon {
+      width: 80px; height: 80px;
+      background: linear-gradient(135deg, var(--blue-pale), #c6f0d8);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 36px; margin: 0 auto 20px;
+      animation: pop 0.5s cubic-bezier(0.34,1.56,0.64,1) 0.1s both;
+    }
+    @keyframes pop { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .success-title { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 22px; color: var(--text); margin-bottom: 10px; }
+    .success-msg { font-size: 14px; color: var(--text-soft); line-height: 1.6; max-width: 380px; margin: 0 auto 24px; }
+    .success-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--blue-pale); color: var(--blue); border-radius: 20px; padding: 8px 18px; font-size: 13px; font-weight: 600; }
+
+    .footer { padding: 16px 36px; border-top: 1px solid var(--gray2); display: flex; align-items: center; justify-content: space-between; }
+    .footer-brand { font-size: 11px; color: var(--text-soft); font-weight: 500; }
+    .footer-secure { font-size: 11px; color: var(--green); font-weight: 600; display: flex; align-items: center; gap: 4px; }
+  </style>
+</head>
+<body>
+<div class="card">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-logo">
+      <div class="logo-icon">📋</div>
+      <div>
+        <div class="logo-text">JJ-Gestión - PYS</div>
+        <div class="logo-sub">Gobierno de Datos e AI</div>
+      </div>
+    </div>
+    <h1>Verificación de Áreas <br> Paz y Salvo </h1>
+    <p>Complete el formulario para iniciar el proceso. Recibirá notificaciones en los rechazos y al finalizar el proceso.</p>
+    <div class="status-pill">Sistema activo — Procesamiento automático</div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-bar">
+    <div class="progress-fill" id="progress"></div>
+  </div>
+
+  <!-- FORM -->
+  <form id="mainForm" novalidate>
+    <div class="body" id="formBody">
+
+      <!-- Sección 1 -->
+      <div class="section-label">Información del excolaborador</div>
+
+      <div class="field" id="f-nombre">
+        <label for="nombre">Nombre Completo <span class="req">*</span></label>
+        <input type="text" id="nombre" name="nombre" placeholder="Ej: nombre1 nombre2 apellido1 apellido2" autocomplete="name" />
+        <div class="error-msg">Este campo es obligatorio.</div>
+      </div>
+
+      <div class="row-2">
+        <div class="field" id="f-cedula">
+          <label for="cedula">Número de Documento <span class="req">*</span></label>
+          <input type="text" id="cedula" name="cedula" placeholder="Ej: 1001001001" inputmode="numeric" />
+          <div class="error-msg">Ingrese un número de cédula válido.</div>
+        </div>
+        <div class="field" id="f-tipo_evento">
+          <label for="tipo_evento">Motivo de retiro <span class="req">*</span></label>
+          <div class="select-wrap">
+            <select id="tipo_evento" name="tipo_evento">
+              <option value="">Seleccionar...</option>
+              <option value="Renuncia Voluntaria">Renuncia Voluntaria</option>
+              <option value="Terminación de Contrato">Terminación de Contrato</option>
+            </select>
+          </div>
+          <div class="error-msg">Seleccione un tipo de evento.</div>
+        </div>
+      </div>
+
+      <div class="field" id="f-email_colaborador">
+        <label for="email_colaborador">Email del Excolaborador <span class="req">*</span></label>
+        <input type="email" id="email_colaborador" name="email_colaborador" placeholder="Ej: Jose.Sarta@dominio.com — correo personal" />
+        <div class="error-msg">Ingrese un correo electrónico válido.</div>
+      </div>
+
+      <!-- Sección 2 -->
+      <div class="section-label" style="margin-top:12px;">Información laboral</div>
+
+      <div class="row-2">
+        <div class="field" id="f-cargo">
+          <label for="cargo">Cargo <span class="req">*</span></label>
+          <input type="text" id="cargo" name="cargo" placeholder="Ej: DIRECCION DE INGENIERIA DE SOFTWARE" />
+          <div class="error-msg">Ingrese el cargo.</div>
+        </div>
+        <div class="field" id="f-area">
+          <label for="area">Área de Trabajo <span class="req">*</span></label>
+          <input type="text" id="area" name="area" placeholder="Ej: GOBIERNO DE DATOS E AI" />
+          <div class="error-msg">Ingrese el área de trabajo.</div>
+        </div>
+      </div>
+
+      <div class="row-2">
+        <div class="field" id="f-fecha_retiro">
+          <label for="fecha_retiro">Fecha de Retiro <span class="req">*</span></label>
+          <input type="date" id="fecha_retiro" name="fecha_retiro" />
+          <div class="error-msg">Seleccione la fecha de retiro.</div>
+        </div>
+        <div class="field" id="f-email_jefe">
+          <label for="email_jefe">Email Jefe Inmediato <span class="req">*</span></label>
+          <input type="email" id="email_jefe" name="email_jefe" placeholder="jefe.inmediato@datatools.com.co" />
+          <div class="error-msg">Ingrese el email del jefe inmediato.</div>
+        </div>
+      </div>
+
+      <!-- Campo OTRO — opcional -->
+      <div class="field" id="f-email_otro">
+        <label for="email_otro">Otro <span class="opt">(opcional)</span></label>
+        <input type="email" id="email_otro" name="email_otro" placeholder="otro.revisor@datatools.com.co" />
+        <div class="otro-hint">Si necesita incluir a una persona adicional en el proceso de verificación.</div>
+        <div class="error-msg">El correo ingresado no es válido.</div>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn" disabled>
+        <span class="btn-text">Enviar Solicitud →</span>
+      </button>
+    </div>
+  </form>
+
+  <!-- SUCCESS -->
+  <div class="success-screen" id="successScreen">
+    <div class="success-icon">✅</div>
+    <div class="success-title">¡Solicitud Enviada!</div>
+    <p class="success-msg">
+      La solicitud ha sido registrada y enviada a todas las áreas para revisión simultánea.<br><br>
+    </p>
+    <div class="success-badge"></div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <span class="footer-brand">© JJ - Gestión — PYS - Gobierno de Datos e AI</span>
+    <span class="footer-secure">🔒 Envío seguro</span>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  const WEBHOOK_URL = 'https://n8n_srv1.datatools.com.co/webhook/pazysalvo';
+
+  const form          = document.getElementById('mainForm');
+  const submitBtn     = document.getElementById('submitBtn');
+  const progressFill  = document.getElementById('progress');
+  const formBody      = document.getElementById('formBody');
+  const successScreen = document.getElementById('successScreen');
+
+  // Solo estos campos son OBLIGATORIOS para la barra de progreso
+  const requiredFields = [
+    'nombre', 'cedula', 'tipo_evento', 'email_colaborador',
+    'cargo', 'area', 'fecha_retiro', 'email_jefe'
+  ];
+
+  function validateEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  function isValidField(id) {
+    const el = document.getElementById(id);
+    if (!el) return false;
+    const value = el.value.trim();
+    if (!value) return false;
+    if (id === 'cedula') return /^\d+$/.test(value);
+    if (id === 'email_colaborador' || id === 'email_jefe') return validateEmail(value);
+    return true;
+  }
+
+  // email_otro: válido si está vacío O si es un email correcto
+  function isOtroValid() {
+    const val = document.getElementById('email_otro').value.trim();
+    if (!val) return true;           // vacío → OK, es opcional
+    return validateEmail(val);       // si escribió algo, debe ser email válido
+  }
+
+  function updateProgress() {
+    let filled = requiredFields.filter(id => isValidField(id)).length;
+    const percent = (filled / requiredFields.length) * 100;
+    progressFill.style.width = percent + '%';
+
+    const allRequiredOk = filled === requiredFields.length;
+    const otroOk        = isOtroValid();
+
+    submitBtn.disabled = !(allRequiredOk && otroOk);
+  }
+
+  document.querySelectorAll('input, select').forEach(el => {
+    el.addEventListener('input', updateProgress);
+    el.addEventListener('change', updateProgress);
+  });
+
+  function setError(fieldId, show) {
+    const wrapper = document.getElementById('f-' + fieldId);
+    const input   = document.getElementById(fieldId);
+    if (!wrapper || !input) return;
+    if (show) {
+      wrapper.classList.add('has-error');
+      input.classList.remove('valid');
+      input.classList.add('error');
+    } else {
+      wrapper.classList.remove('has-error');
+      input.classList.remove('error');
+      input.classList.add('valid');
+    }
+  }
+
+  function validate() {
+    let valid = true;
+
+    requiredFields.forEach(id => {
+      if (!isValidField(id)) { setError(id, true); valid = false; }
+      else                    { setError(id, false); }
+    });
+
+    // Validar email_otro solo si tiene contenido
+    const otroVal = document.getElementById('email_otro').value.trim();
+    if (otroVal && !validateEmail(otroVal)) {
+      setError('email_otro', true);
+      valid = false;
+    } else {
+      // quitar error (no marcar como 'valid' si está vacío)
+      const wrapper = document.getElementById('f-email_otro');
+      const input   = document.getElementById('email_otro');
+      wrapper.classList.remove('has-error');
+      input.classList.remove('error');
+      if (otroVal) input.classList.add('valid');
+    }
+
+    return valid;
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+
+    submitBtn.disabled = true;
+    submitBtn.classList.add('loading');
+    submitBtn.querySelector('.btn-text').textContent = 'Enviando solicitud...';
+
+    const emailOtro = document.getElementById('email_otro').value.trim();
+
+    const payload = {
+      nombre:               document.getElementById('nombre').value.trim(),
+      cedula:               document.getElementById('cedula').value.trim(),
+      tipo_evento:          document.getElementById('tipo_evento').value,
+      email_colaborador:    document.getElementById('email_colaborador').value.trim(),
+      cargo:                document.getElementById('cargo').value.trim(),
+      area_trabajo:         document.getElementById('area').value.trim(),
+      fecha_retiro:         document.getElementById('fecha_retiro').value,
+      email_jefe_inmediato: document.getElementById('email_jefe').value.trim(),
+      // Solo incluir email_otro si tiene valor
+      ...(emailOtro ? { email_otro: emailOtro } : {})
+    };
+
+    try {
+      const res = await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (!res.ok) throw new Error();
+
+      formBody.style.display = 'none';
+      successScreen.style.display = 'block';
+      progressFill.style.width = '100%';
+
+    } catch (err) {
+      submitBtn.disabled = false;
+      submitBtn.classList.remove('loading');
+      submitBtn.querySelector('.btn-text').textContent = 'Enviar Solicitud →';
+      alert('⚠️ Hubo un error al enviar la solicitud. Por favor intente nuevamente o contacte a soporte.');
+    }
+  });
+
+  updateProgress();
+});
+</script>
+</body>
+</html>
